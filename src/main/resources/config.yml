@@ -1,0 +1,8 @@
+# XAuth Configuration
+
+# Minimum password length
+min-password-length: 6
+# How long before unlogged players get kicked (in seconds)
+login-timeout: 60
+# Messages prefix
+prefix: '§8[§7XAuth§8]'
