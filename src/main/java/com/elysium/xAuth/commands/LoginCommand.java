@@ -20,24 +20,28 @@ public class LoginCommand implements CommandExecutor {
             sender.sendMessage("Only players can use this command.");
             return true;
         }
+        String[] commandArgs = auth.consumePendingAuthCommand(player.getUniqueId(), "login");
+        if (commandArgs != null) {
+            args = commandArgs;
+        }
 
         if (auth.isLoggedIn(player.getUniqueId())) {
-            player.sendMessage("§8[§7XAuth§8] §cYou are already logged in!");
+            player.sendMessage(auth.getPrefix() + " §cYou are already logged in!");
             return true;
         }
 
-        if (!auth.isRegistered(player.getName())) {
-            player.sendMessage("§8[§7XAuth§8] §cYou are not registered! Use §f/register <password> <confirm>§c.");
+        if (!auth.isRegistered(player.getUniqueId())) {
+            player.sendMessage(auth.getPrefix() + " §cYou are not registered! Use §f/register <password> <confirm>§c.");
             return true;
         }
 
         if (args.length != 1) {
-            player.sendMessage("§8[§7XAuth§8] §cUsage: §f/login <password>");
+            player.sendMessage(auth.getPrefix() + " §cUsage: §f/login <password>");
             return true;
         }
 
-        if (!auth.login(player, args[0])) {
-            player.sendMessage("§8[§7XAuth§8] §cIncorrect password! Try again.");
+        if (!auth.login(player, args[0]) && !auth.isLockedOut(player.getUniqueId()) && auth.isRegistered(player.getUniqueId())) {
+            player.sendMessage(auth.getPrefix() + " §cIncorrect password! Try again.");
         }
 
         return true;

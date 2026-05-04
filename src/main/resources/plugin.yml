@@ -5,6 +5,8 @@ author: "elysium"
 main: com.elysium.xAuth.XAuth
 api-version: '1.21.11'
 load: POSTWORLD
+libraries:
+  - org.mindrot:jbcrypt:0.4
 commands:
   login:
     description: Login to your account
@@ -16,7 +18,7 @@ commands:
     description: Reset a players account
     usage: /xreset <player>
 
-  permissions:
-    xauth.reset:
-      description: Allows resetting a players account
-      default: op
+permissions:
+  xauth.reset:
+    description: Allows resetting a players account
+    default: op
